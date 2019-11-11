@@ -1,0 +1,49 @@
+buildscript {
+    ext {
+        version_java = "1.6"
+        version_kotlin = "1.3.50"
+        version_junit5 = "5.5.2"
+        version_lunar_calendar = "1.0.2"
+
+        version_detekt = "1.0.0.RC8"
+    }
+
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$version_kotlin"
+        classpath "gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$version_detekt"
+        classpath "com.adarshr:gradle-test-logger-plugin:2.0.0"
+    }
+}
+
+apply plugin: "java"
+apply plugin: "idea"
+apply plugin: "kotlin"
+
+apply from: "$project.rootDir/gradle/scripts/testing-junit.gradle"
+
+group "com.github.fj.koreanlunarcalendar"
+version "1.0"
+
+repositories {
+    jcenter()
+    mavenCentral()
+    maven { url "https://jitpack.io" }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation "com.github.FrancescoJo:korean-lunar-calendar:$version_lunar_calendar"
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "$version_java"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "$version_java"
+}
